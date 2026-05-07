@@ -1,16 +1,5 @@
 {
   "buildCommand": "npm run build",
   "installCommand": "npm install",
-  "framework": {
-    "name": "nextjs",
-    "slug": "nextjs"
-  },
-  "build": {
-    "env": {
-      "NEXT_TELEMETRY_DISABLED": "1"
-    }
-  },
-  "install": {
-    "cache": false
-  }
+  "framework": "nextjs"
 }
