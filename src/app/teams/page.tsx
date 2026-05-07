@@ -51,8 +51,7 @@ export default function TeamsPage() {
 
   const fetchUser = async () => {
     try {
-      // Use deployed backend URL
-const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL || "https://pour-over.onrender.com";
+      const res = await fetch(`${BACKEND_URL}/api/v1/auth/me`);
       const data = await res.json();
       setUser(data);
       if (data.token) {
@@ -68,7 +67,7 @@ const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL || "https://pour-over.on
   const loadTeamData = async (token: string) => {
     try {
       // Get user's team - for now, assume first team
-      const res = await fetch("http://BACKEND_URL/api/v1/auth/teams", {
+      const res = await fetch("BACKEND_URL/api/v1/auth/teams", {
         headers: { "Authorization": `Bearer ${token}` }
       });
       const data = await res.json();
@@ -79,21 +78,21 @@ const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL || "https://pour-over.on
         setMyTeam({ id: teamId, ...teamData });
         
         // Load members
-        const membersRes = await fetch(`http://BACKEND_URL/api/v1/auth/teams/${teamId}/members`, {
+        const membersRes = await fetch(`BACKEND_URL/api/v1/auth/teams/${teamId}/members`, {
           headers: { "Authorization": `Bearer ${token}` }
         });
         const membersData = await membersRes.json();
         setTeamMembers(membersData.members || []);
         
         // Load leaderboard
-        const lbRes = await fetch(`http://BACKEND_URL/api/v1/auth/teams/${teamId}/leaderboard`, {
+        const lbRes = await fetch(`BACKEND_URL/api/v1/auth/teams/${teamId}/leaderboard`, {
           headers: { "Authorization": `Bearer ${token}` }
         });
         const lbData = await lbRes.json();
         setLeaderboard(lbData.leaderboard || []);
         
         // Load stats
-        const statsRes = await fetch(`http://BACKEND_URL/api/v1/auth/teams/${teamId}/stats`, {
+        const statsRes = await fetch(`BACKEND_URL/api/v1/auth/teams/${teamId}/stats`, {
           headers: { "Authorization": `Bearer ${token}` }
         });
         const statsData = await statsRes.json();
@@ -108,7 +107,7 @@ const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL || "https://pour-over.on
     if (!newTeamName.trim() || !user?.token) return;
     
     try {
-      const res = await fetch("http://BACKEND_URL/api/v1/auth/teams/create", {
+      const res = await fetch("BACKEND_URL/api/v1/auth/teams/create", {
         method: "POST",
         headers: { 
           "Content-Type": "application/json",
@@ -133,7 +132,7 @@ const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL || "https://pour-over.on
     if (!joinTeamId.trim() || !user?.token) return;
     
     try {
-      await fetch(`http://BACKEND_URL/api/v1/auth/teams/${joinTeamId}/join`, {
+      await fetch(`BACKEND_URL/api/v1/auth/teams/${joinTeamId}/join`, {
         method: "POST",
         headers: { "Authorization": `Bearer ${user.token}` }
       });

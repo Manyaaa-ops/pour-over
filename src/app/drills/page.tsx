@@ -26,7 +26,7 @@ export default function DrillsPage() {
 
   const fetchDrills = async () => {
     try {
-      const res = await fetch("http://BACKEND_URL/api/v1/auth/drills");
+      const res = await fetch("BACKEND_URL/api/v1/auth/drills");
       const data = await res.json();
       setDrills(data.drills || {});
     } catch (e) {

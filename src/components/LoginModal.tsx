@@ -37,7 +37,7 @@ export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
         ? { email, password }
         : { email, password, name };
 
-      const res = await fetch(`http://BACKEND_URL${endpoint}`, {
+      const res = await fetch(`${BACKEND_URL}${endpoint}`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(body),
