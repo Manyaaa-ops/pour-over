@@ -1,16 +1,11 @@
 node_modules/
 .next/
-uploads/
+out/
 __pycache__/
 venv/
-.venv/
+uploads/
+*.pyc
 .env
 *.log
 .DS_Store
-
-# Keep these
-!package.json
-!tsconfig.json
-!next.config.mjs
-!tailwind.config.js
-!postcss.config.js
+.vscode/
