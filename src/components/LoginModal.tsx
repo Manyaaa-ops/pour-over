@@ -3,6 +3,8 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
+const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL || "https://pour-over.onrender.com";
+
 interface LoginModalProps {
   isOpen: boolean;
   onClose: () => void;
@@ -35,7 +37,7 @@ export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
         ? { email, password }
         : { email, password, name };
 
-      const res = await fetch(`http://127.0.0.1:8000${endpoint}`, {
+      const res = await fetch(`http://BACKEND_URL${endpoint}`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(body),

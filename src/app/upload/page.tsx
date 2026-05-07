@@ -4,6 +4,9 @@ import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Navbar from "@/components/Navbar";
 
+// Use deployed backend URL
+const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL || "https://pour-over.onrender.com";
+
 interface User {
   guest_id?: string;
   user_id?: string;
@@ -105,7 +108,7 @@ export default function UploadPage() {
 
   const fetchUser = async () => {
     try {
-      const res = await fetch("http://localhost:8000/api/v1/auth/me");
+      const res = await fetch("http://BACKEND_URL/api/v1/auth/me");
       const data = await res.json();
       setUser(data);
     } catch (e) {
@@ -115,7 +118,7 @@ export default function UploadPage() {
 
   const fetchPackages = async () => {
     try {
-      const res = await fetch("http://localhost:8000/api/v1/auth/packages");
+      const res = await fetch("http://BACKEND_URL/api/v1/auth/packages");
       const data = await res.json();
       setPackages(data.packages || []);
     } catch (e) {
@@ -126,7 +129,7 @@ export default function UploadPage() {
   const handleLogin = async () => {
     setLoginError("");
     try {
-      const res = await fetch("http://localhost:8000/api/v1/auth/login", {
+      const res = await fetch("http://BACKEND_URL/api/v1/auth/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password })
@@ -147,7 +150,7 @@ export default function UploadPage() {
   const handleRegister = async () => {
     setLoginError("");
     try {
-      const res = await fetch("http://localhost:8000/api/v1/auth/register", {
+      const res = await fetch("http://BACKEND_URL/api/v1/auth/register", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password, name })
@@ -169,7 +172,7 @@ export default function UploadPage() {
   const handleSendOTP = async () => {
     setLoginError("");
     try {
-      const res = await fetch("http://localhost:8000/api/v1/auth/otp/send", {
+      const res = await fetch("http://BACKEND_URL/api/v1/auth/otp/send", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email })
@@ -188,7 +191,7 @@ export default function UploadPage() {
   const handleVerifyOTP = async () => {
     setLoginError("");
     try {
-      const res = await fetch("http://localhost:8000/api/v1/auth/otp/verify", {
+      const res = await fetch("http://BACKEND_URL/api/v1/auth/otp/verify", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, otp })
@@ -214,7 +217,7 @@ export default function UploadPage() {
   const handlePayment = async () => {
     setLoginError("");
     try {
-      const res = await fetch("http://localhost:8000/api/v1/auth/payment/init", {
+      const res = await fetch("http://BACKEND_URL/api/v1/auth/payment/init", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ 
@@ -277,7 +280,7 @@ export default function UploadPage() {
     formData.append("file", file);
     
     try {
-      const response = await fetch("http://localhost:8000/api/v1/analysis/upload", {
+      const response = await fetch("http://BACKEND_URL/api/v1/analysis/upload", {
         method: "POST",
         body: formData,
       });

@@ -4,6 +4,8 @@ import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import Navbar from "@/components/Navbar";
 
+const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL || "https://pour-over.onrender.com";
+
 interface TeamMember {
   member_id: string;
   analyses: number;
@@ -49,7 +51,8 @@ export default function TeamsPage() {
 
   const fetchUser = async () => {
     try {
-      const res = await fetch("http://localhost:8000/api/v1/auth/me");
+      // Use deployed backend URL
+const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL || "https://pour-over.onrender.com";
       const data = await res.json();
       setUser(data);
       if (data.token) {
@@ -65,7 +68,7 @@ export default function TeamsPage() {
   const loadTeamData = async (token: string) => {
     try {
       // Get user's team - for now, assume first team
-      const res = await fetch("http://localhost:8000/api/v1/auth/teams", {
+      const res = await fetch("http://BACKEND_URL/api/v1/auth/teams", {
         headers: { "Authorization": `Bearer ${token}` }
       });
       const data = await res.json();
@@ -76,21 +79,21 @@ export default function TeamsPage() {
         setMyTeam({ id: teamId, ...teamData });
         
         // Load members
-        const membersRes = await fetch(`http://localhost:8000/api/v1/auth/teams/${teamId}/members`, {
+        const membersRes = await fetch(`http://BACKEND_URL/api/v1/auth/teams/${teamId}/members`, {
           headers: { "Authorization": `Bearer ${token}` }
         });
         const membersData = await membersRes.json();
         setTeamMembers(membersData.members || []);
         
         // Load leaderboard
-        const lbRes = await fetch(`http://localhost:8000/api/v1/auth/teams/${teamId}/leaderboard`, {
+        const lbRes = await fetch(`http://BACKEND_URL/api/v1/auth/teams/${teamId}/leaderboard`, {
           headers: { "Authorization": `Bearer ${token}` }
         });
         const lbData = await lbRes.json();
         setLeaderboard(lbData.leaderboard || []);
         
         // Load stats
-        const statsRes = await fetch(`http://localhost:8000/api/v1/auth/teams/${teamId}/stats`, {
+        const statsRes = await fetch(`http://BACKEND_URL/api/v1/auth/teams/${teamId}/stats`, {
           headers: { "Authorization": `Bearer ${token}` }
         });
         const statsData = await statsRes.json();
@@ -105,7 +108,7 @@ export default function TeamsPage() {
     if (!newTeamName.trim() || !user?.token) return;
     
     try {
-      const res = await fetch("http://localhost:8000/api/v1/auth/teams/create", {
+      const res = await fetch("http://BACKEND_URL/api/v1/auth/teams/create", {
         method: "POST",
         headers: { 
           "Content-Type": "application/json",
@@ -130,7 +133,7 @@ export default function TeamsPage() {
     if (!joinTeamId.trim() || !user?.token) return;
     
     try {
-      await fetch(`http://localhost:8000/api/v1/auth/teams/${joinTeamId}/join`, {
+      await fetch(`http://BACKEND_URL/api/v1/auth/teams/${joinTeamId}/join`, {
         method: "POST",
         headers: { "Authorization": `Bearer ${user.token}` }
       });

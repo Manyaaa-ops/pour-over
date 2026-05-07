@@ -2,7 +2,8 @@
 
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { useRouter } from "next/navigation";
+
+const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL || "https://pour-over.onrender.com";
 
 interface CreditPack {
   id: number;
@@ -88,7 +89,7 @@ function PaymentModal({ onClose }: PaymentModalProps) {
     setSelectedPack(packId);
 
     try {
-      const res = await fetch("http://127.0.0.1:8000/api/v1/auth/payment/create-order", {
+      const res = await fetch("http://BACKEND_URL/api/v1/auth/payment/create-order", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -123,7 +124,7 @@ function PaymentModal({ onClose }: PaymentModalProps) {
     const check = async () => {
       try {
         const res = await fetch(
-          `http://127.0.0.1:8000/api/v1/auth/payment/status/${orderId}`
+          `http://BACKEND_URL/api/v1/auth/payment/status/${orderId}`
         );
         const data = await res.json();
 
@@ -160,7 +161,7 @@ function PaymentModal({ onClose }: PaymentModalProps) {
 
     try {
       const res = await fetch(
-        `http://127.0.0.1:8000/api/v1/auth/payment/status/${paymentData.order_id}`
+        `http://BACKEND_URL/api/v1/auth/payment/status/${paymentData.order_id}`
       );
       const data = await res.json();
 

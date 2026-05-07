@@ -4,6 +4,8 @@ import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import Navbar from "@/components/Navbar";
 
+const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL || "https://pour-over.onrender.com";
+
 interface Drill {
   name: string;
   description: string;
@@ -24,7 +26,7 @@ export default function DrillsPage() {
 
   const fetchDrills = async () => {
     try {
-      const res = await fetch("http://localhost:8000/api/v1/auth/drills");
+      const res = await fetch("http://BACKEND_URL/api/v1/auth/drills");
       const data = await res.json();
       setDrills(data.drills || {});
     } catch (e) {

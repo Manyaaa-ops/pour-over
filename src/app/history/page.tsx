@@ -4,6 +4,8 @@ import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import Navbar from "@/components/Navbar";
 
+const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL || "https://pour-over.onrender.com";
+
 interface HistoryItem {
   video_id: string;
   score: number;
@@ -34,7 +36,7 @@ export default function HistoryPage() {
 
   const fetchUser = async () => {
     try {
-      const res = await fetch("http://localhost:8000/api/v1/auth/me");
+      const res = await fetch("http://BACKEND_URL/api/v1/auth/me");
       const data = await res.json();
       setUser(data);
       if (data.token) {
@@ -49,7 +51,7 @@ export default function HistoryPage() {
 
   const fetchHistory = async (token: string) => {
     try {
-      const res = await fetch("http://localhost:8000/api/v1/auth/history", {
+      const res = await fetch("http://BACKEND_URL/api/v1/auth/history", {
         headers: { "Authorization": `Bearer ${token}` }
       });
       const data = await res.json();
